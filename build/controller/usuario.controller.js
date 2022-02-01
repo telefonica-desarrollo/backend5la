@@ -21,7 +21,7 @@ class UsuarioController {
         return __awaiter(this, void 0, void 0, function* () {
             const data = req.body;
             console.log(data);
-            const sql = "Select * from USUARIOS where Usuario = ? && Password = ?";
+            const sql = "Select * from USUARIOS where Usuario = ? and Password = ?";
             yield database_1.default.query(sql, [data.Usuario, data.Password], (err, result) => {
                 try {
                     if (err)

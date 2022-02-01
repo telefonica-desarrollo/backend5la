@@ -18,7 +18,8 @@ class IndexController {
     obtenerRegistrosNuevos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const data = req.body;
-            const sql = "SELECT * FROM Registros WHERE STATUS=0 and ID_TIENDA = ?";
+            console.log(data);
+            const sql = "SELECT * FROM Registros WHERE STATUS = 0 and ID_TIENDA = ?";
             yield database_1.default.query(sql, [data.ID_TIENDA], (err, result) => {
                 try {
                     if (err)
@@ -46,26 +47,6 @@ class IndexController {
             });
         });
     }
-    validarUsuario(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const data = req.body;
-            console.log(data);
-            const sql = "Select * from Usuarios where USUSARIO = ? && PASSWORD = ?";
-            yield database_1.default.query(sql, [data.Usuario, data.Password], (err, result) => {
-                try {
-                    if (err)
-                        throw "Peticion no validaa";
-                    if (result.length > 0)
-                        res.json(result);
-                    else
-                        res.json(false);
-                }
-                catch (error) {
-                    console.log(error);
-                }
-            });
-        });
-    }
     cambiarStatus(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const data = req.body;
@@ -82,7 +63,24 @@ class IndexController {
             });
         });
     }
-    modificarTienda(req, res) {
+    iniciarSeguimiento(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = req.body;
+            console.log(data);
+            const sql = "INSERT INTO SEGUIMIENTO (ID_USUARIO, ID_REGISTRO) VALUES (?,?)";
+            yield database_1.default.query(sql, [data.ID_USUARIO, data.ID_REGISTRO], (err, result) => {
+                try {
+                    if (err)
+                        throw err;
+                    res.json(result);
+                }
+                catch (error) {
+                    console.log(error);
+                }
+            });
+        });
+    }
+    modificarRegistro(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const data = req.body;
             console.log(data);
@@ -93,6 +91,44 @@ class IndexController {
                     if (err)
                         throw err;
                     res.json(result);
+                }
+                catch (error) {
+                    console.log(error);
+                }
+            });
+        });
+    }
+    validarUsuario(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = req.body;
+            console.log(data);
+            const sql = "Select * from Usuarios where USUARIO = ? && PASSWORD = ?";
+            yield database_1.default.query(sql, [data.Usuario, data.Password], (err, result) => {
+                try {
+                    if (err)
+                        throw "Peticion no validaa";
+                    if (result.length > 0) {
+                        console.log(result);
+                        res.json(result[0]);
+                    }
+                    else
+                        res.json(null);
+                }
+                catch (error) {
+                    console.log(error);
+                }
+            });
+        });
+    }
+    informacionTienda(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = req.body;
+            const sql = "Select * from Tiendas where Id_Tienda = ?";
+            yield database_1.default.query(sql, [data.ID_TIENDA], (err, result) => {
+                try {
+                    if (err)
+                        throw err;
+                    res.json(result[0]);
                 }
                 catch (error) {
                     console.log(error);

@@ -5,7 +5,9 @@ class IndexController{
 
     async obtenerRegistrosNuevos(req: Request, res:Response){
         const data: any = req.body
-        const sql = "SELECT * FROM Registros WHERE STATUS=0 and ID_TIENDA = ?"
+        console.log(data);
+        
+        const sql = "SELECT * FROM Registros WHERE STATUS = 0 and ID_TIENDA = ?"
         await con.query(sql, [data.ID_TIENDA], (err, result) => {
             try {
                 if(err) throw err
@@ -31,23 +33,6 @@ class IndexController{
         })
     }
 
-    async validarUsuario(req: Request, res: Response){
-        const data: any= req.body;
-        console.log(data);
-        
-        const sql = "Select * from Usuarios where USUSARIO = ? && PASSWORD = ?"
-        await con.query(sql , [data.Usuario, data.Password] , (err, result) => {
-            try {
-                if(err) throw "Peticion no validaa";
-                if(result.length > 0) res.json(result)
-                else res.json(false)     
-
-            } catch (error) {
-                console.log(error);
-            }
-        })
-    }
-
     async cambiarStatus(req: Request, res:Response){
         const data: any = req.body;
         console.log(data);
@@ -63,7 +48,23 @@ class IndexController{
         })
     }
 
-    async modificarTienda(req: Request, res: Response){
+    async iniciarSeguimiento(req: Request, res:Response){
+        const data: any= req.body;
+        console.log(data);
+
+        const sql = "INSERT INTO SEGUIMIENTO (ID_USUARIO, ID_REGISTRO) VALUES (?,?)"
+        await con.query(sql, [data.ID_USUARIO, data.ID_REGISTRO], (err, result) => {
+            try {
+                if(err) throw err
+                res.json(result)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+        
+    }
+
+    async modificarRegistro(req: Request, res: Response){
         const data: any = req.body;
         console.log(data);
         
@@ -74,6 +75,39 @@ class IndexController{
             try {
                 if(err) throw err
                 res.json(result)
+            } catch (error) {
+                console.log(error);
+            }
+        })
+    }
+
+    
+    async validarUsuario(req: Request, res: Response){
+        const data: any= req.body;
+        console.log(data);
+        
+        const sql = "Select * from Usuarios where USUARIO = ? && PASSWORD = ?"
+        await con.query(sql , [data.Usuario, data.Password] , (err, result) => {
+            try {
+                if(err) throw "Peticion no validaa";
+                if(result.length > 0) {
+                    console.log(result);
+                    res.json(result[0])
+                }
+                else res.json(null)     
+
+            } catch (error) {
+                console.log(error);
+            }
+        })
+    }
+    async informacionTienda(req: Request, res: Response){
+        const data: any = req.body
+        const sql = "Select * from Tiendas where Id_Tienda = ?"
+        await con.query(sql, [data.ID_TIENDA], (err, result)=> {
+            try {
+                if(err) throw err
+                res.json(result[0])                
             } catch (error) {
                 console.log(error);
             }

@@ -1,6 +1,5 @@
 import {Router} from 'express';
 import { indexController } from '../controller/index.controller';
-import {usuarioController} from "../controller/usuario.controller"
 
 
 class IndexRoutes{
@@ -11,9 +10,15 @@ class IndexRoutes{
     }
 
     config(){  
-        this.router.post("/registros", indexController.obtenerRegistros)
         this.router.post("/registros/nuevos", indexController.obtenerRegistrosNuevos)
-        this.router.post("/login", usuarioController.validarUsuario)
+        this.router.post("/registros", indexController.obtenerRegistros)
+
+        this.router.post("/registro/iniciar/seguimiento", indexController.iniciarSeguimiento)
+        this.router.post("/registro/seguimiento/status", indexController.cambiarStatus)
+        this.router.post("/registro/seguimiento/informacion", indexController.modificarRegistro)
+
+        this.router.post("/login", indexController.validarUsuario)
+        this.router.post("/tienda", indexController.informacionTienda)
     }
 }
 
