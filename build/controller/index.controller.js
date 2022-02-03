@@ -24,9 +24,11 @@ class IndexController {
                 try {
                     if (err)
                         throw err;
+                    console.log(result);
                     res.json(result);
                 }
                 catch (error) {
+                    console.log(error);
                 }
             });
         });
@@ -40,9 +42,29 @@ class IndexController {
                 try {
                     if (err)
                         throw err;
+                    console.log(result);
                     res.json(result);
                 }
                 catch (error) {
+                    console.log(error);
+                }
+            });
+        });
+    }
+    obtenerRegistro(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = req.body;
+            console.log(data);
+            const sql = "SELECT * FROM Registros where ID_REGISTRO = ?";
+            yield database_1.default.query(sql, [data.ID_REGISTRO], (err, result) => {
+                try {
+                    if (err)
+                        throw err;
+                    console.log(result);
+                    res.json(result[0]);
+                }
+                catch (error) {
+                    console.log(error);
                 }
             });
         });
@@ -51,14 +73,16 @@ class IndexController {
         return __awaiter(this, void 0, void 0, function* () {
             const data = req.body;
             console.log(data);
-            const sql = "UPDATE Registros SET STATUS = ? WHERE ID_REGISTRO ? ?";
+            const sql = "UPDATE Registros SET STATUS = ? WHERE ID_REGISTRO = ?";
             yield database_1.default.query(sql, [data.STATUS, data.ID_REGISTRO], (err, result) => {
                 try {
                     if (err)
                         throw err;
+                    console.log(result);
                     res.json(result);
                 }
                 catch (error) {
+                    console.log(error);
                 }
             });
         });
@@ -67,11 +91,12 @@ class IndexController {
         return __awaiter(this, void 0, void 0, function* () {
             const data = req.body;
             console.log(data);
-            const sql = "INSERT INTO SEGUIMIENTO (ID_USUARIO, ID_REGISTRO) VALUES (?,?)";
+            const sql = "INSERT INTO Seguimiento (ID_USUARIO, ID_REGISTRO) VALUES (?,?)";
             yield database_1.default.query(sql, [data.ID_USUARIO, data.ID_REGISTRO], (err, result) => {
                 try {
                     if (err)
                         throw err;
+                    console.log(result);
                     res.json(result);
                 }
                 catch (error) {
@@ -90,6 +115,7 @@ class IndexController {
                 try {
                     if (err)
                         throw err;
+                    console.log(result);
                     res.json(result);
                 }
                 catch (error) {
@@ -108,6 +134,7 @@ class IndexController {
                     if (err)
                         throw "Peticion no validaa";
                     if (result.length > 0) {
+                        console.log(result);
                         console.log(result);
                         res.json(result[0]);
                     }
@@ -128,6 +155,7 @@ class IndexController {
                 try {
                     if (err)
                         throw err;
+                    console.log(result);
                     res.json(result[0]);
                 }
                 catch (error) {

@@ -18,7 +18,7 @@ con.connect((err) => {
         console.log("Base de datos conectada");
     }
     catch (error) {
-        console.log(error);
+        console.log("Error de conexion");
     }
 });
 exports.default = con;

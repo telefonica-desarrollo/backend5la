@@ -11,13 +11,13 @@ class IndexController{
         await con.query(sql, [data.ID_TIENDA], (err, result) => {
             try {
                 if(err) throw err
+                console.log(result);
                 res.json(result)
             } catch (error) {
-                
+                console.log(error);
             }
         })    
     }
-
     async obtenerRegistros(req: Request, res: Response){
         const data = req.body
         console.log(data);
@@ -26,24 +26,42 @@ class IndexController{
         await con.query(sql, [data.ID_USUARIO], (err, result) => {
             try {
                 if(err) throw err;
+                console.log(result);
                 res.json(result)
             } catch (error) {
-                
+                console.log(error);
             }
         })
     }
+    async obtenerRegistro(req: Request, res: Response){
+        const data = req.body
+        console.log(data);
+        
+        const sql = "SELECT * FROM Registros where ID_REGISTRO = ?"
+        await con.query(sql, [data.ID_REGISTRO], (err, result) => {
+            try {
+                if(err) throw err;
+                console.log(result);
+                res.json(result[0])
+            } catch (error) {
+                console.log(error);
+            }
+        })
+    }
+
 
     async cambiarStatus(req: Request, res:Response){
         const data: any = req.body;
         console.log(data);
         
-        const sql = "UPDATE Registros SET STATUS = ? WHERE ID_REGISTRO ? ?";
+        const sql = "UPDATE Registros SET STATUS = ? WHERE ID_REGISTRO = ?";
         await con.query(sql, [data.STATUS, data.ID_REGISTRO], (err, result)=> {
             try {
                 if(err) throw err
+                console.log(result);
                 res.json(result)
             } catch (error) {
-                
+                console.log(error);
             }
         })
     }
@@ -52,10 +70,11 @@ class IndexController{
         const data: any= req.body;
         console.log(data);
 
-        const sql = "INSERT INTO SEGUIMIENTO (ID_USUARIO, ID_REGISTRO) VALUES (?,?)"
+        const sql = "INSERT INTO Seguimiento (ID_USUARIO, ID_REGISTRO) VALUES (?,?)"
         await con.query(sql, [data.ID_USUARIO, data.ID_REGISTRO], (err, result) => {
             try {
                 if(err) throw err
+                console.log(result);
                 res.json(result)
             } catch (error) {
                 console.log(error)
@@ -74,14 +93,13 @@ class IndexController{
         await con.query(sql, [data.PRIMER_RESPUESTA, data.COMENTARIOS, data.CITA, data.FECHA_CITA], (err, result) => {
             try {
                 if(err) throw err
+                console.log(result);
                 res.json(result)
             } catch (error) {
                 console.log(error);
             }
         })
     }
-
-    
     async validarUsuario(req: Request, res: Response){
         const data: any= req.body;
         console.log(data);
@@ -92,10 +110,10 @@ class IndexController{
                 if(err) throw "Peticion no validaa";
                 if(result.length > 0) {
                     console.log(result);
+                    console.log(result);
                     res.json(result[0])
                 }
                 else res.json(null)     
-
             } catch (error) {
                 console.log(error);
             }
@@ -107,6 +125,7 @@ class IndexController{
         await con.query(sql, [data.ID_TIENDA], (err, result)=> {
             try {
                 if(err) throw err
+                console.log(result);
                 res.json(result[0])                
             } catch (error) {
                 console.log(error);
