@@ -65,6 +65,21 @@ class IndexController{
             }
         })
     }
+    async cambiar_PrimerRespuesta(req: Request, res:Response){
+        const data: any = req.body;
+        console.log(data);
+        
+        const sql = "UPDATE Registros SET STATUS = 2, PRIMER_RESPUESTA= ?  WHERE ID_REGISTRO = ?";
+        await con.query(sql, [data.PRIMER_RESPUESTA, data.ID_REGISTRO], (err, result)=> {
+            try {
+                if(err) throw err
+                console.log(result);
+                res.json(result)
+            } catch (error) {
+                console.log(error);
+            }
+        })
+    }
 
     async iniciarSeguimiento(req: Request, res:Response){
         const data: any= req.body;

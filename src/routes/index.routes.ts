@@ -21,6 +21,7 @@ class IndexRoutes{
 
         this.router.post("/registro/iniciar/seguimiento", indexController.iniciarSeguimiento)
         this.router.post("/registro/seguimiento/status", indexController.cambiarStatus)
+        this.router.post("/registro/seguimiento/p-respuesta", indexController.cambiar_PrimerRespuesta)
         this.router.post("/registro/seguimiento/informacion", indexController.modificarRegistro)
 
         this.router.post("/login", indexController.validarUsuario)

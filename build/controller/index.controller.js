@@ -87,6 +87,24 @@ class IndexController {
             });
         });
     }
+    cambiar_PrimerRespuesta(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = req.body;
+            console.log(data);
+            const sql = "UPDATE Registros SET STATUS = 2, PRIMER_RESPUESTA= ?  WHERE ID_REGISTRO = ?";
+            yield database_1.default.query(sql, [data.PRIMER_RESPUESTA, data.ID_REGISTRO], (err, result) => {
+                try {
+                    if (err)
+                        throw err;
+                    console.log(result);
+                    res.json(result);
+                }
+                catch (error) {
+                    console.log(error);
+                }
+            });
+        });
+    }
     iniciarSeguimiento(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const data = req.body;
